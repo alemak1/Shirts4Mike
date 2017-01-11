@@ -83,20 +83,29 @@ function get_products_recent() {
 }
 
 /*
- * Loops through all the products, looking for a search term in the product names
+ * Looks for a search term in the product names
  * @param    string    $s    the search term
  * @return   array           a list of the products that contain the search term in their name
  */
 function get_products_search($s) {
-    $results = array();
-    $all = get_products_all();
+   
+   require(ROOT_PATH . "inc/database.php");
 
-    foreach($all as $product) {
-        if (stripos($product["name"],$s) !== false) {
-            $results[] = $product;
-        }
-    }
-    return $results;
+   try{
+        $results = $db->prepare("
+            SELECT name,price,img,sku,paypal 
+            FROM products 
+            WHERE name LIKE ?
+            ORDER BY sku");
+        $results->bindValue(1, "%" . $s . "%");
+        $results->execute();
+   }catch(Exception $e){
+        echo "Data could not be retrieved from the database";
+        exit;
+   }
+
+   $matches = $results->fetchAll(PDO::FETCH_ASSOC);
+    return $matches;
 }
 
 /*
