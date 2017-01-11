@@ -12,7 +12,7 @@ try{
 }
 
 try{
-	$results = $db->query("SELECT name,price FROM products ORDER BY sku ASC");
+	$results = $db->query("SELECT name,price, img,sku,paypal FROM products ORDER BY sku ASC");
 	echo "Our query ran successfully!";
 	var_dump($results);
 }catch(Exception $e){
@@ -20,5 +20,3 @@ try{
 	exit;
 }
 
-echo "<pre>";
-var_dump($results->fetchAll(PDO::FETCH_ASSOC));
