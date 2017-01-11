@@ -24,7 +24,7 @@ function get_product_single($sku){
 
     $product = $results->fetch(PDO::FETCH_ASSOC);
 
-    if ($product == false) return false;
+     if ($product == false) return false;
 
     $product["sizes"] = array();
 
@@ -43,8 +43,8 @@ function get_product_single($sku){
         exit;
     }
 
-    while($row = $results->fetch(PDO::FETCH_ASSOC){
-        $product["sizes"][] = $row["size"]
+    while($row = $results->fetch(PDO::FETCH_ASSOC)){
+        $product["sizes"][] = $row["size"];
     }
 
     echo "<pre>";
