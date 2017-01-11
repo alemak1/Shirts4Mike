@@ -12,7 +12,9 @@ function get_product_single($sku){
     require(ROOT_PATH . "inc/database.php");
 
     try{
-        $results = $db-query("SELECT name, price, img, sku, paypal FROM products WHERE sku = 108");
+        $results = $db->prepare("SELECT name, price, img, sku, paypal FROM products WHERE sku = ?");
+        $results->bindParam(1,$sku);
+        $results->execute();
     }catch(Exception $e){
         echo "Data could not be retrieved from the database.";
         exit;
@@ -21,6 +23,10 @@ function get_product_single($sku){
 
     $product = $results->fetch(PDO::FETCH_ASSOC);
 
+    echo "<pre>";
+    var_dump($product);
+    exit;
+    
     return $product;
 }
 
