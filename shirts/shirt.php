@@ -6,7 +6,7 @@
 
 // if an ID is specified in the query string, use it
 if (isset($_GET["id"])) {
-	$product_id = $_GET["id"];
+	$product_id = intval($_GET["id"]);
 	$product = get_product_single($product_id);
 	
 }

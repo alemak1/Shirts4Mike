@@ -1,6 +1,30 @@
 <?php
 
 /*
+    * Returns an array of product information for the product that matches the sku;
+    * Returns a boolean false if no product matches the sku;
+    @param      int             $sku    the sku
+    @return     mixed           array   list of product information for the one matching product
+                bool            false if no product matches
+
+*/
+function get_product_single($sku){
+    require(ROOT_PATH . "inc/database.php");
+
+    try{
+        $results = $db-query("SELECT name, price, img, sku, paypal FROM products WHERE sku = 108");
+    }catch(Exception $e){
+        echo "Data could not be retrieved from the database.";
+        exit;
+
+    }
+
+    $product = $results->fetch(PDO::FETCH_ASSOC);
+
+    return $product;
+}
+
+/*
  * Returns the four most recent products, using the order of the elements in the array
  * @return   array           a list of the last four products in the array;
                              the most recent product is the last one in the array
