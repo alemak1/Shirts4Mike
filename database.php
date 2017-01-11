@@ -21,4 +21,4 @@ try{
 }
 
 echo "<pre>";
-var_dump($results->fetchAll());
+var_dump($results->fetchAll(PDO::FETCH_ASSOC));
