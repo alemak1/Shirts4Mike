@@ -71,14 +71,14 @@ function get_products_recent() {
             FROM products
             ORDER BY sku DESC
             LIMIT 4
-            ")
+            ");
     }catch(Exception $e){
         echo "Data could not be retrieved from the database";
         exit;
     }
     
     $recent = $results->fetchAll(PDO::FETCH_ASSOC);
-
+    $recent = array_reverse($recent);
     return $recent;
 }
 
