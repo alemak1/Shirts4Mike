@@ -21,12 +21,36 @@ function get_product_single($sku){
 
     }
 
+
     $product = $results->fetch(PDO::FETCH_ASSOC);
+
+    if ($product == false) return false;
+
+    $product["sizes"] = array();
+
+    try{
+        $results = $db->prepare("
+            SELECT size 
+            FROM produdct_sizes ps 
+            INNER JOIN sizes s 
+            ON ps.size_id = s.id
+            WHERE product_sku = ?
+            ORDER BY 'order' ");
+        $results->bindParam(1,$sku);
+        $results->execute();
+    }catch(Exception $e){
+        echo "Data could not be retrieved from the database";
+        exit;
+    }
+
+    while($row = $results->fetch(PDO::FETCH_ASSOC){
+        $product["sizes"][] = $row["size"]
+    }
 
     echo "<pre>";
     var_dump($product);
     exit;
-    
+
     return $product;
 }
 
