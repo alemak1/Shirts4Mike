@@ -104,7 +104,20 @@ function get_products_search($s) {
  * @return   int             the total number of products
  */
 function get_products_count() {
-    return count(get_products_all());
+    require(ROOT_PATH . "inc/database.php");
+
+    try{
+        $results = $db->query("
+            SELECT COUNT(sku)
+            FROM products
+            ");
+    }catch(Exception $e){
+        echo "Could not retrieve data from database";
+        exit;
+    }
+
+    return intval($results->fetchColumn(0));
+    
 }
 
 /*
