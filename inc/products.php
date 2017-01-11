@@ -63,15 +63,22 @@ function get_products_recent() {
     $recent = array();
     $all = get_products_all();
 
-    $total_products = count($all);
-    $position = 0;
-    
-    foreach($all as $product) {
-        $position = $position + 1;
-        if ($total_products - $position < 4) {
-            $recent[] = $product;
-        }
+    require(ROOT_PATH . "inc/database.php");
+
+    try{
+        $results = $db->query("
+            SELECT name,price,img,sku,paypal
+            FROM products
+            ORDER BY sku DESC
+            LIMIT 4
+            ")
+    }catch(Exception $e){
+        echo "Data could not be retrieved from the database";
+        exit;
     }
+    
+    $recent = $results->fetchAll(PDO::FETCH_ASSOC);
+
     return $recent;
 }
 
